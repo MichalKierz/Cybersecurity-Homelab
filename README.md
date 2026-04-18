@@ -16,10 +16,3 @@ Labs focused on identity and access management.
 Labs focused on configuration security and container security.
 
 ---
-
-## Repository Structure
-
-```text
-SOC/
-IAM/
-Cloud DevSecOps/

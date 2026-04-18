@@ -1,0 +1,292 @@
+[ terraform framework ]: 100%|████████████████████|[1/1], Current File Scanned=../../root/cloud-lab1/before/main.tf
+[ secrets framework ]: 100%|████████████████████|[1/1], Current File Scanned=/root/cloud-lab1/before/main.tf
+
+       _               _
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V /
+  \___|_| |_|\___|\___|_|\_\___/ \_/
+
+By Prisma Cloud | version: 3.2.510
+
+terraform scan results:
+
+Passed checks: 10, Failed checks: 15, Skipped checks: 0
+
+Check: CKV_AWS_41: "Ensure no hard coded AWS access key and secret key exists in provider"
+        PASSED for resource: aws.default
+        File: /main.tf:5-7
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/secrets-policies/bc-aws-secrets-5
+Check: CKV_AWS_93: "Ensure S3 bucket policy does not lockout all but root user. (Prevent lockouts needing root account fixes)"
+        PASSED for resource: aws_s3_bucket.lab_bucket
+        File: /main.tf:9-15
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/s3-policies/bc-aws-s3-24
+Check: CKV_AWS_375: "Ensure AWS S3 bucket does not have global view ACL permissions enabled"
+        PASSED for resource: aws_s3_bucket_acl.lab_bucket_acl
+        File: /main.tf:17-20
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/bc-aws-375
+Check: CKV_AWS_277: "Ensure no security groups allow ingress from 0.0.0.0:0 to port -1"
+        PASSED for resource: aws_security_group.lab_sg
+        File: /main.tf:31-50
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/ensure-aws-security-group-does-not-allow-all-traffic-on-all-ports
+Check: CKV_AWS_260: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 80"
+        PASSED for resource: aws_security_group.lab_sg
+        File: /main.tf:31-50
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/ensure-aws-security-groups-do-not-allow-ingress-from-00000-to-port-80
+Check: CKV_AWS_25: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389"
+        PASSED for resource: aws_security_group.lab_sg
+        File: /main.tf:31-50
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/networking-2
+Check: CKV_AWS_23: "Ensure every security group and rule has a description"
+        PASSED for resource: aws_security_group.lab_sg
+        File: /main.tf:31-50
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/networking-31
+Check: CKV_AWS_57: "S3 Bucket has an ACL defined which allows public WRITE access."
+        PASSED for resource: aws_s3_bucket.lab_bucket
+        File: /main.tf:9-15
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/s3-policies/s3-2-acl-write-permissions-everyone
+Check: CKV2_AWS_43: "Ensure S3 Bucket does not allow access to all Authenticated users"
+        PASSED for resource: aws_s3_bucket_acl.lab_bucket_acl
+        File: /main.tf:17-20
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-iam-policies/ensure-s3-bucket-does-not-allow-access-to-all-authenticated-users
+Check: CKV_AWS_19: "Ensure all data stored in the S3 bucket is securely encrypted at rest"
+        PASSED for resource: aws_s3_bucket.lab_bucket
+        File: /main.tf:9-15
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/s3-policies/s3-14-data-encrypted-at-rest
+Check: CKV_AWS_55: "Ensure S3 bucket has ignore public ACLs enabled"
+        FAILED for resource: aws_s3_bucket_public_access_block.lab_bucket_pab
+        File: /main.tf:22-29
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/s3-policies/bc-aws-s3-21
+
+                22 | resource "aws_s3_bucket_public_access_block" "lab_bucket_pab" {
+                23 |   bucket = aws_s3_bucket.lab_bucket.id
+                24 |
+                25 |   block_public_acls       = false
+                26 |   ignore_public_acls      = false
+                27 |   block_public_policy     = false
+                28 |   restrict_public_buckets = false
+                29 | }
+
+Check: CKV_AWS_54: "Ensure S3 bucket has block public policy enabled"
+        FAILED for resource: aws_s3_bucket_public_access_block.lab_bucket_pab
+        File: /main.tf:22-29
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/s3-policies/bc-aws-s3-20
+
+                22 | resource "aws_s3_bucket_public_access_block" "lab_bucket_pab" {
+                23 |   bucket = aws_s3_bucket.lab_bucket.id
+                24 |
+                25 |   block_public_acls       = false
+                26 |   ignore_public_acls      = false
+                27 |   block_public_policy     = false
+                28 |   restrict_public_buckets = false
+                29 | }
+
+Check: CKV_AWS_53: "Ensure S3 bucket has block public ACLS enabled"
+        FAILED for resource: aws_s3_bucket_public_access_block.lab_bucket_pab
+        File: /main.tf:22-29
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/s3-policies/bc-aws-s3-19
+
+                22 | resource "aws_s3_bucket_public_access_block" "lab_bucket_pab" {
+                23 |   bucket = aws_s3_bucket.lab_bucket.id
+                24 |
+                25 |   block_public_acls       = false
+                26 |   ignore_public_acls      = false
+                27 |   block_public_policy     = false
+                28 |   restrict_public_buckets = false
+                29 | }
+
+Check: CKV_AWS_56: "Ensure S3 bucket has 'restrict_public_buckets' enabled"
+        FAILED for resource: aws_s3_bucket_public_access_block.lab_bucket_pab
+        File: /main.tf:22-29
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/s3-policies/bc-aws-s3-22
+
+                22 | resource "aws_s3_bucket_public_access_block" "lab_bucket_pab" {
+                23 |   bucket = aws_s3_bucket.lab_bucket.id
+                24 |
+                25 |   block_public_acls       = false
+                26 |   ignore_public_acls      = false
+                27 |   block_public_policy     = false
+                28 |   restrict_public_buckets = false
+                29 | }
+
+Check: CKV_AWS_382: "Ensure no security groups allow egress from 0.0.0.0:0 to port -1"
+        FAILED for resource: aws_security_group.lab_sg
+        File: /main.tf:31-50
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/bc-aws-382
+
+                31 | resource "aws_security_group" "lab_sg" {
+                32 |   name        = "lab1-open-ssh"
+                33 |   description = "Open SSH to the world"
+                34 |
+                35 |   ingress {
+                36 |     description = "SSH from anywhere"
+                37 |     from_port   = 22
+                38 |     to_port     = 22
+                39 |     protocol    = "tcp"
+                40 |     cidr_blocks = ["0.0.0.0/0"]
+                41 |   }
+                42 |
+                43 |   egress {
+                44 |     description = "All outbound"
+                45 |     from_port   = 0
+                46 |     to_port     = 0
+                47 |     protocol    = "-1"
+                48 |     cidr_blocks = ["0.0.0.0/0"]
+                49 |   }
+                50 | }
+
+Check: CKV_AWS_24: "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22"
+        FAILED for resource: aws_security_group.lab_sg
+        File: /main.tf:31-50
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/networking-1-port-security
+
+                31 | resource "aws_security_group" "lab_sg" {
+                32 |   name        = "lab1-open-ssh"
+                33 |   description = "Open SSH to the world"
+                34 |
+                35 |   ingress {
+                36 |     description = "SSH from anywhere"
+                37 |     from_port   = 22
+                38 |     to_port     = 22
+                39 |     protocol    = "tcp"
+                40 |     cidr_blocks = ["0.0.0.0/0"]
+                41 |   }
+                42 |
+                43 |   egress {
+                44 |     description = "All outbound"
+                45 |     from_port   = 0
+                46 |     to_port     = 0
+                47 |     protocol    = "-1"
+                48 |     cidr_blocks = ["0.0.0.0/0"]
+                49 |   }
+                50 | }
+
+Check: CKV2_AWS_62: "Ensure S3 buckets should have event notifications enabled"
+        FAILED for resource: aws_s3_bucket.lab_bucket
+        File: /main.tf:9-15
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-logging-policies/bc-aws-2-62
+
+                9  | resource "aws_s3_bucket" "lab_bucket" {
+                10 |   bucket = "lab1-insecure-demo-bucket-123456"
+                11 |
+                12 |   tags = {
+                13 |     Name = "lab1-insecure-demo-bucket"
+                14 |   }
+                15 | }
+
+Check: CKV_AWS_20: "S3 Bucket has an ACL defined which allows public READ access."
+        FAILED for resource: aws_s3_bucket.lab_bucket
+        File: /main.tf:9-15
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/s3-policies/s3-1-acl-read-permissions-everyone
+
+                9  | resource "aws_s3_bucket" "lab_bucket" {
+                10 |   bucket = "lab1-insecure-demo-bucket-123456"
+                11 |
+                12 |   tags = {
+                13 |     Name = "lab1-insecure-demo-bucket"
+                14 |   }
+                15 | }
+
+Check: CKV2_AWS_61: "Ensure that an S3 bucket has a lifecycle configuration"
+        FAILED for resource: aws_s3_bucket.lab_bucket
+        File: /main.tf:9-15
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-logging-policies/bc-aws-2-61
+
+                9  | resource "aws_s3_bucket" "lab_bucket" {
+                10 |   bucket = "lab1-insecure-demo-bucket-123456"
+                11 |
+                12 |   tags = {
+                13 |     Name = "lab1-insecure-demo-bucket"
+                14 |   }
+                15 | }
+
+Check: CKV_AWS_144: "Ensure that S3 bucket has cross-region replication enabled"
+        FAILED for resource: aws_s3_bucket.lab_bucket
+        File: /main.tf:9-15
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/ensure-that-s3-bucket-has-cross-region-replication-enabled
+
+                9  | resource "aws_s3_bucket" "lab_bucket" {
+                10 |   bucket = "lab1-insecure-demo-bucket-123456"
+                11 |
+                12 |   tags = {
+                13 |     Name = "lab1-insecure-demo-bucket"
+                14 |   }
+                15 | }
+
+Check: CKV2_AWS_6: "Ensure that S3 bucket has a Public Access block"
+        FAILED for resource: aws_s3_bucket.lab_bucket
+        File: /main.tf:9-15
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/s3-bucket-should-have-public-access-blocks-defaults-to-false-if-the-public-access-block-is-not-attached
+
+                9  | resource "aws_s3_bucket" "lab_bucket" {
+                10 |   bucket = "lab1-insecure-demo-bucket-123456"
+                11 |
+                12 |   tags = {
+                13 |     Name = "lab1-insecure-demo-bucket"
+                14 |   }
+                15 | }
+
+Check: CKV2_AWS_5: "Ensure that Security Groups are attached to another resource"
+        FAILED for resource: aws_security_group.lab_sg
+        File: /main.tf:31-50
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/ensure-that-security-groups-are-attached-to-ec2-instances-or-elastic-network-interfaces-enis
+
+                31 | resource "aws_security_group" "lab_sg" {
+                32 |   name        = "lab1-open-ssh"
+                33 |   description = "Open SSH to the world"
+                34 |
+                35 |   ingress {
+                36 |     description = "SSH from anywhere"
+                37 |     from_port   = 22
+                38 |     to_port     = 22
+                39 |     protocol    = "tcp"
+                40 |     cidr_blocks = ["0.0.0.0/0"]
+                41 |   }
+                42 |
+                43 |   egress {
+                44 |     description = "All outbound"
+                45 |     from_port   = 0
+                46 |     to_port     = 0
+                47 |     protocol    = "-1"
+                48 |     cidr_blocks = ["0.0.0.0/0"]
+                49 |   }
+                50 | }
+
+Check: CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
+        FAILED for resource: aws_s3_bucket.lab_bucket
+        File: /main.tf:9-15
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/s3-policies/s3-13-enable-logging
+
+                9  | resource "aws_s3_bucket" "lab_bucket" {
+                10 |   bucket = "lab1-insecure-demo-bucket-123456"
+                11 |
+                12 |   tags = {
+                13 |     Name = "lab1-insecure-demo-bucket"
+                14 |   }
+                15 | }
+
+Check: CKV_AWS_21: "Ensure all data stored in the S3 bucket have versioning enabled"
+        FAILED for resource: aws_s3_bucket.lab_bucket
+        File: /main.tf:9-15
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/s3-policies/s3-16-enable-versioning
+
+                9  | resource "aws_s3_bucket" "lab_bucket" {
+                10 |   bucket = "lab1-insecure-demo-bucket-123456"
+                11 |
+                12 |   tags = {
+                13 |     Name = "lab1-insecure-demo-bucket"
+                14 |   }
+                15 | }
+
+Check: CKV_AWS_145: "Ensure that S3 buckets are encrypted with KMS by default"
+        FAILED for resource: aws_s3_bucket.lab_bucket
+        File: /main.tf:9-15
+        Guide: https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-general-policies/ensure-that-s3-buckets-are-encrypted-with-kms-by-default
+
+                9  | resource "aws_s3_bucket" "lab_bucket" {
+                10 |   bucket = "lab1-insecure-demo-bucket-123456"
+                11 |
+                12 |   tags = {
+                13 |     Name = "lab1-insecure-demo-bucket"
+                14 |   }
+                15 | }
